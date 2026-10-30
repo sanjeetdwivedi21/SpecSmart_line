@@ -61,6 +61,61 @@ export interface ActivityItem {
   detail: string;
 }
 
+// Phase 3: Machine Health Checklist Types
+export type ChecklistCategory = 'vibration' | 'temperature' | 'electrical' | 'operational' | 'connectivity';
+export type ChecklistItemStatus = 'available' | 'missing' | 'na';
+
+export interface ChecklistItemDef {
+  id: string;
+  category: ChecklistCategory;
+  categoryTitle: string;
+  label: string;
+  description: string;
+  defaultApplicable: (machine: MachineRecord) => boolean;
+  defaultStatus: (machine: MachineRecord) => ChecklistItemStatus;
+}
+
+export interface ChecklistItemState {
+  status: ChecklistItemStatus;
+  naReason?: string;
+  remarks?: string;
+}
+
+export interface MachineChecklistData {
+  machineId: string;
+  updatedAt: string;
+  items: Record<string, ChecklistItemState>;
+  generalRemarks?: string;
+}
+
+export type VisibilityCategory = 'Poor Visibility' | 'Partial Visibility' | 'Good Visibility' | 'Strong Visibility';
+
+export interface MachineVisibilityScore {
+  totalItems: number;
+  applicableItems: number;
+  availableItems: number;
+  missingItems: number;
+  naItems: number;
+  scorePct: number;
+  category: VisibilityCategory;
+  isFullyAssessed: boolean;
+  hasCriticalGaps: boolean;
+}
+
+export type RecommendationPriority = 'Critical' | 'High' | 'Medium' | 'Low';
+
+export interface ChecklistRecommendation {
+  id: string;
+  machineId: string;
+  machineTag: string;
+  machineName: string;
+  category: ChecklistCategory;
+  title: string;
+  priority: RecommendationPriority;
+  whyExplanation: string;
+  actionRequired: string;
+}
+
 export interface FactoryProfile {
   id: string;
   name: string;
@@ -87,6 +142,10 @@ export interface FactoryProfile {
 
   // Phase 2: Assessment Progress
   assessmentSavedAt?: string;
+
+  // Phase 3: Checklists Map (machineId -> MachineChecklistData)
+  checklists?: Record<string, MachineChecklistData>;
+  checklistSavedAt?: string;
 
   metrics: {
     totalMachines: number;

@@ -9,6 +9,7 @@ import { QuickMachineList } from './components/dashboard/QuickMachineList';
 import { CreateLinePlanModal } from './components/modals/CreateLinePlanModal';
 import { ModulePlaceholderView } from './components/views/ModulePlaceholderView';
 import { FactoryAssessmentModule } from './components/assessment/FactoryAssessmentModule';
+import { MachineHealthChecklistModule } from './components/checklist/MachineHealthChecklistModule';
 import { DEMO_FACTORIES } from './data/mockFactoryData';
 import { FactoryProfile, NavigationTab } from './types';
 import { 
@@ -170,6 +171,15 @@ export default function App() {
               onUpdateFactory={(updated) => {
                 setFactory(updated);
                 showToast(`Factory Assessment saved for ${updated.name}`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'machine-health' ? (
+            <MachineHealthChecklistModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`Checklist saved! Dashboard coverage & readiness synced.`);
               }}
               onNavigate={setCurrentTab}
             />
