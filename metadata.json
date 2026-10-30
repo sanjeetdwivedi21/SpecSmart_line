@@ -1,0 +1,6 @@
+{
+  "name": "SpecSmart Line Planner",
+  "description": "Industrial IoT planning & specification platform for smart manufacturing line design, predictive maintenance readiness, and vendor-ready specifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
