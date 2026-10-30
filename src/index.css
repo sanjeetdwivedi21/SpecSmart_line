@@ -40,3 +40,22 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(59, 130, 246, 0.45);
 }
+
+/* Print Styles for Vendor-Ready PDF Export */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  aside, header, .print\:hidden, [role="alert"] {
+    display: none !important;
+  }
+  div[class*="pl-"] {
+    padding-left: 0 !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+}

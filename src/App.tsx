@@ -10,6 +10,13 @@ import { CreateLinePlanModal } from './components/modals/CreateLinePlanModal';
 import { ModulePlaceholderView } from './components/views/ModulePlaceholderView';
 import { FactoryAssessmentModule } from './components/assessment/FactoryAssessmentModule';
 import { MachineHealthChecklistModule } from './components/checklist/MachineHealthChecklistModule';
+import { RoiCalculatorModule } from './components/calculator/RoiCalculatorModule';
+import { ArchitectureDesignerModule } from './components/architecture/ArchitectureDesignerModule';
+import { ProcurementAdvisorModule } from './components/procurement/ProcurementAdvisorModule';
+import { SpecificationBuilderModule } from './components/specification/SpecificationBuilderModule';
+import { AlertStandardsModule } from './components/standards/AlertStandardsModule';
+import { ProjectsModule } from './components/projects/ProjectsModule';
+import { SettingsModule } from './components/settings/SettingsModule';
 import { DEMO_FACTORIES } from './data/mockFactoryData';
 import { FactoryProfile, NavigationTab } from './types';
 import { 
@@ -180,6 +187,65 @@ export default function App() {
               onUpdateFactory={(updated) => {
                 setFactory(updated);
                 showToast(`Checklist saved! Dashboard coverage & readiness synced.`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'roi-calculator' ? (
+            <RoiCalculatorModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`ROI scenario saved & pushed to specification.`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'architecture-designer' ? (
+            <ArchitectureDesignerModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`Architecture blueprint saved.`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'procurement-advisor' ? (
+            <ProcurementAdvisorModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`Procurement BOM applied to tender spec.`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'specification-builder' ? (
+            <SpecificationBuilderModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'alert-standards' ? (
+            <AlertStandardsModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`Alert standards and thresholds saved.`);
+              }}
+              onNavigate={setCurrentTab}
+            />
+          ) : currentTab === 'projects' ? (
+            <ProjectsModule
+              currentFactory={factory}
+              onSelectFactory={handleSelectFactory}
+              onNavigate={setCurrentTab}
+              onCreateNewPlan={() => setCreateModalOpen(true)}
+            />
+          ) : currentTab === 'settings' ? (
+            <SettingsModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
               }}
               onNavigate={setCurrentTab}
             />
