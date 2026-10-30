@@ -10,23 +10,29 @@ export type NavigationTab =
   | 'projects'
   | 'settings';
 
-export type CriticalityLevel = 'High' | 'Medium' | 'Low';
+export type CriticalityLevel = 'High' | 'Medium' | 'Low'; // High = Critical, Medium = Important, Low = Standard
+export type MachineCriticality = 'Critical' | 'Important' | 'Standard';
 export type MachineStatus = 'Normal' | 'Warning' | 'Critical';
 export type AlertSeverity = 'Critical' | 'Warning' | 'Info';
 export type MaintenanceStyle = 'Run-to-failure' | 'Time-based' | 'Condition-based' | 'Predictive';
 
 export interface MachineRecord {
   id: string;
-  tag: string;
-  name: string;
-  type: string;
-  criticality: CriticalityLevel;
+  tag: string; // Machine ID / Tag
+  name: string; // Machine Name
+  type: string; // Machine Type
+  manufacturer?: string; // Manufacturer e.g., Gleason, Siemens, Krones
+  installationYear?: number; // e.g., 2021
+  ratedPowerKw?: number; // Rated Power (kW)
+  criticality: CriticalityLevel; // High = Critical, Medium = Important, Low = Standard
+  machineCriticality?: MachineCriticality; // Explicit Phase 2 criticality
+  operatingHours?: number; // Total cumulative or monthly machine operating hours
   status: MachineStatus;
   vibrationMmS: number;
   tempC: number;
   currentA: number;
   monitoringLevel: 'None' | 'Basic SCADA' | 'Condition Monitored' | 'Predictive Ready';
-  failureRiskCategory: 'Bearing Spalling' | 'Thermal Overload' | 'Gearbox Backlash' | 'Hydraulic Loss' | 'Motor Misalignment';
+  failureRiskCategory: 'Bearing Spalling' | 'Thermal Overload' | 'Gearbox Backlash' | 'Hydraulic Loss' | 'Motor Misalignment' | string;
   historicalDowntimeHrs: number;
   lastAnomaly?: string;
 }
@@ -63,15 +69,32 @@ export interface FactoryProfile {
   state: string;
   sector: string;
   lineName: string;
-  lineType: 'Machining & CNC Cell' | 'Automated Assembly' | 'High-Speed Packaging' | 'Continuous Process' | 'Textile Spinning';
+  lineId?: string;
+  lineType: 'Machining & CNC Cell' | 'Automated Assembly' | 'High-Speed Packaging' | 'Continuous Process' | 'Textile Spinning' | string;
   targetGoLive: string;
   currentMaintenanceStyle: MaintenanceStyle;
+
+  // Phase 2: Factory Information & Operations
+  operatingHoursPerDay?: number;
+  workingDaysPerWeek?: number;
+  productionShifts?: number;
+  shiftsDescription?: string;
+
+  // Phase 2: Production Line Details
+  productionCapacity?: string;
+  processDescription?: string;
+  monthlyProductionTarget?: string;
+
+  // Phase 2: Assessment Progress
+  assessmentSavedAt?: string;
+
   metrics: {
     totalMachines: number;
     criticalMachines: number;
     monthlyDowntimeHours: number;
     hourlyDowntimeCostINR: number;
     estimatedMonthlyDowntimeCostINR: number;
+    annualDowntimeCostINR?: number;
     monitoringCoveragePct: number;
     pcmReadinessScore: number;
     pcmReadinessGrade: 'Foundational' | 'Emerging' | 'Operational' | 'Predictive Leader';

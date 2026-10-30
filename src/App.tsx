@@ -8,6 +8,7 @@ import { RecentActivity } from './components/dashboard/RecentActivity';
 import { QuickMachineList } from './components/dashboard/QuickMachineList';
 import { CreateLinePlanModal } from './components/modals/CreateLinePlanModal';
 import { ModulePlaceholderView } from './components/views/ModulePlaceholderView';
+import { FactoryAssessmentModule } from './components/assessment/FactoryAssessmentModule';
 import { DEMO_FACTORIES } from './data/mockFactoryData';
 import { FactoryProfile, NavigationTab } from './types';
 import { 
@@ -163,6 +164,15 @@ export default function App() {
                 onNavigate={setCurrentTab}
               />
             </>
+          ) : currentTab === 'factory-assessment' ? (
+            <FactoryAssessmentModule
+              factory={factory}
+              onUpdateFactory={(updated) => {
+                setFactory(updated);
+                showToast(`Factory Assessment saved for ${updated.name}`);
+              }}
+              onNavigate={setCurrentTab}
+            />
           ) : (
             <ModulePlaceholderView
               tab={currentTab}

@@ -117,18 +117,20 @@ export const QuickMachineList: React.FC<QuickMachineListProps> = ({
                       {m.name}
                     </div>
                     <div className="text-[11px] text-slate-400 truncate max-w-xs">
-                      {m.type}
+                      {m.manufacturer ? `${m.manufacturer} · ` : ''}{m.type}
                     </div>
                   </td>
 
                   {/* Criticality */}
                   <td className="py-3 px-3">
                     <span className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${
-                      m.criticality === 'High' 
+                      (m.machineCriticality === 'Critical' || m.criticality === 'High')
                         ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                        : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                        : (m.machineCriticality === 'Important' || m.criticality === 'Medium')
+                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                        : 'bg-slate-800 text-slate-300 border-slate-700'
                     }`}>
-                      {m.criticality}
+                      {m.machineCriticality || m.criticality}
                     </span>
                   </td>
 
